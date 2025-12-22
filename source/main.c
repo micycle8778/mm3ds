@@ -107,6 +107,8 @@ int main()
     float angleX = 0.f;
     float angleY = 0.f;
 
+	int dbgIdx = 0;
+
 	// Main loop
 	while (aptMainLoop())
 	{
@@ -117,7 +119,7 @@ int main()
 		if (kDown & KEY_SELECT)
 			break; // break in order to return to hbmenu
 
-        if (!C3D_FrameBegin(C3D_FRAME_NONBLOCK)) continue;
+        C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
             C3D_RenderTargetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
             C3D_FrameDrawOn(target);
 
@@ -132,7 +134,7 @@ int main()
 
             renderer_request(renderer, cube_mesh, &modelView);
             renderer_render(renderer);
-            printf("rendered frame");
+            //printf("rendered frame %d\n", dbgIdx++);
         C3D_FrameEnd(0);
 
 	}

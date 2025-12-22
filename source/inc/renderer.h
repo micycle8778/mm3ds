@@ -14,17 +14,19 @@ struct material {
     C3D_FVec emission;
 };
 
+// HORSE CHANGE: We need the material to exist.
 static const struct material default_material = {
     .ambient  = { {0.f, 0.2f, 0.2f, 0.2f} },
-    .diffuse  = { {0.f, 0.2f, 0.2f, 0.2f} },
-    .specular = { {0.f, 0.2f, 0.2f, 0.2f} },
-    .emission = { {0.f, 0.2f, 0.2f, 0.2f} },
+    .diffuse  = { {0.f, 0.4f, 0.4f, 0.4f} },
+    .specular = { {0.f, 0.8f, 0.8f, 0.8f} },
+    // This LHS needs to be >0 so it isn't totally transparent.
+    .emission = { {0.5f, 0.0f, 0.0f, 0.0f} },
 };
 
 struct mesh {
     struct material material;
     struct vertex* vbo_data; // must be allocated in linear memory!
-    C3D_BufInfo buf_info;
+    C3D_BufInfo *buf_info;
     C3D_Tex texture;
     size_t vertex_count;
 };
@@ -37,7 +39,7 @@ struct render_request {
 struct renderer {
     // 8 byte align
 
-    C3D_AttrInfo attr_info;
+    C3D_AttrInfo *attr_info;
 
     // 4 byte align
 
