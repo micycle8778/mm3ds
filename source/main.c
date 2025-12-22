@@ -117,7 +117,7 @@ int main()
 		if (kDown & KEY_SELECT)
 			break; // break in order to return to hbmenu
 
-        if (!C3D_FrameBegin(C3D_FRAME_NONBLOCK)) continue;
+        C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
             C3D_RenderTargetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
             C3D_FrameDrawOn(target);
 
