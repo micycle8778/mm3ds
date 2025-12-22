@@ -1,0 +1,26 @@
+[
+  {
+    "arguments": [
+      "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gcc",
+      "-g",
+      "-Wall",
+      "-O2",
+      "-ffunction-sections",
+      "-march=armv6k",
+      "-mtune=mpcore",
+      "-mfloat-abi=hard",
+      "-mtp=soft",
+      "-I/home/micycle/Documents/mm3ds/include",
+      "-I/opt/devkitpro/libctru/include",
+      "-I/home/micycle/Documents/mm3ds/build",
+      "-D__3DS__",
+      "-c",
+      "-o",
+      "main.o",
+      "/home/micycle/Documents/mm3ds/source/main.c"
+    ],
+    "directory": "/home/micycle/Documents/mm3ds/build",
+    "file": "/home/micycle/Documents/mm3ds/source/main.c",
+    "output": "/home/micycle/Documents/mm3ds/build/main.o"
+  }
+]
