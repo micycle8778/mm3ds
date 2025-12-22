@@ -132,9 +132,7 @@ int main()
 
             renderer_request(renderer, cube_mesh, &modelView);
             renderer_render(renderer);
-            printf("rendered frame");
         C3D_FrameEnd(0);
-
 	}
 
 	// Deinitialize the scene

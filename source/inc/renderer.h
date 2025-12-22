@@ -16,9 +16,9 @@ struct material {
 
 static const struct material default_material = {
     .ambient  = { {0.f, 0.2f, 0.2f, 0.2f} },
-    .diffuse  = { {0.f, 0.2f, 0.2f, 0.2f} },
-    .specular = { {0.f, 0.2f, 0.2f, 0.2f} },
-    .emission = { {0.f, 0.2f, 0.2f, 0.2f} },
+    .diffuse  = { {0.f, 0.4f, 0.4f, 0.4f} },
+    .specular = { {0.f, 0.8f, 0.8f, 0.8f} },
+    .emission = { {1.f, 0.0f, 0.0f, 0.0f} },
 };
 
 struct mesh {

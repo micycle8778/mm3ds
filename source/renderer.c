@@ -5,6 +5,7 @@
 #include <citro3d.h>
 #include <tex3ds.h>
 
+#include "c3d/attribs.h"
 #include "inc/panic.h"
 #include "inc/renderer.h"
 
@@ -95,15 +96,18 @@ renderer_register_mesh(
     mesh->vertex_count = n_vertices;
     PANIC_IF_NULL(mesh->vbo_data);
 
+    mesh->material = material;
+
     Tex3DS_Texture t3x = Tex3DS_TextureImport(texture_data, texture_size, &mesh->texture, NULL, false);
     if (!t3x) {
         PANIC("importing t3x texture failed!");
     }
     // "Delete the t3x object since we don't need it."
     Tex3DS_TextureFree(t3x); 
+    C3D_TexSetFilter(&mesh->texture, GPU_LINEAR, GPU_NEAREST);
 
     BufInfo_Init(&mesh->buf_info);
-    BufInfo_Add(&mesh->buf_info, &mesh->vbo_data, sizeof(struct vertex), 3, 0x210);
+    BufInfo_Add(&mesh->buf_info, mesh->vbo_data, sizeof(struct vertex), 3, 0x210);
 
     return ret;
 }
@@ -149,6 +153,7 @@ renderer_render(struct renderer* this) {
         C3D_FVUnifSet(GPU_VERTEX_SHADER, this->uLoc_lightClr,     1.0f, 1.0f,  1.0f, 1.0f);
 
         C3D_TexBind(0, &mesh->texture);  // bind texture
+        C3D_SetAttrInfo(&this->attr_info);
         C3D_SetBufInfo(&mesh->buf_info); // bind vertices
         C3D_DrawArrays(GPU_TRIANGLES, 0, mesh->vertex_count);
     }
