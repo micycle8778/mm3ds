@@ -1,0 +1,13 @@
+[package]
+name = "mm3ds"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ctru-rs = { git = "https://github.com/rust3ds/ctru-rs" }
+ctru-sys = { git = "https://github.com/rust3ds/ctru-rs" }
+citro3d = { git = "https://github.com/micycle8778/citro3d-rs" }
+glam = "0.30.9"
+
+[package.metadata.cargo-3ds]
+romfs_dir = "romfs"
