@@ -26,7 +26,7 @@ static const struct material default_material = {
 struct mesh {
     struct material material;
     struct vertex* vbo_data; // must be allocated in linear memory!
-    C3D_BufInfo *buf_info;
+    C3D_BufInfo buf_info;
     C3D_Tex texture;
     size_t vertex_count;
 };
@@ -39,7 +39,7 @@ struct render_request {
 struct renderer {
     // 8 byte align
 
-    C3D_AttrInfo *attr_info;
+    C3D_AttrInfo attr_info;
 
     // 4 byte align
 

@@ -36,11 +36,10 @@ renderer_init() {
     // HORSE(ret->uLoc_lightClr);
     // HORSE(ret->uLoc_material);
 
-    ret->attr_info = C3D_GetAttrInfo();
-    AttrInfo_Init(ret->attr_info);
-    AttrInfo_AddLoader(ret->attr_info, 0, GPU_FLOAT, 3); // v0=position
-    AttrInfo_AddLoader(ret->attr_info, 1, GPU_FLOAT, 2); // v1=texcoord
-    AttrInfo_AddLoader(ret->attr_info, 2, GPU_FLOAT, 3); // v2=normal
+    AttrInfo_Init(&ret->attr_info);
+    AttrInfo_AddLoader(&ret->attr_info, 0, GPU_FLOAT, 3); // v0=position
+    AttrInfo_AddLoader(&ret->attr_info, 1, GPU_FLOAT, 2); // v1=texcoord
+    AttrInfo_AddLoader(&ret->attr_info, 2, GPU_FLOAT, 3); // v2=normal
 
     // Configure the first fragment shading substage to blend the texture color with
     // the vertex color (calculated by the vertex shader using a lighting algorithm)
@@ -120,10 +119,9 @@ renderer_register_mesh(
 
     printf("texture: %p\n", mesh->texture.data);
 
-    mesh->buf_info = C3D_GetBufInfo();
-    BufInfo_Init(mesh->buf_info);
+    BufInfo_Init(&mesh->buf_info);
     /* HORSE_CHANGE: &mesh->vbo_data => mesh->vbo_data */
-    BufInfo_Add(mesh->buf_info, mesh->vbo_data, sizeof(struct vertex), 3, 0x210);
+    BufInfo_Add(&mesh->buf_info, mesh->vbo_data, sizeof(struct vertex), 3, 0x210);
 
     return ret;
 }
@@ -177,7 +175,8 @@ renderer_render(struct renderer* this) {
         C3D_FVUnifSet(GPU_VERTEX_SHADER, this->uLoc_lightClr,     1.0f, 1.0f,  1.0f, 1.0f);
 
         C3D_TexBind(0, &mesh->texture);  // bind texture
-        //C3D_SetBufInfo(mesh->buf_info); // bind vertices
+        C3D_SetAttrInfo(&this->attr_info); // HORSE CHANGE: need attr info :)
+        C3D_SetBufInfo(&mesh->buf_info); // bind vertices
         C3D_DrawArrays(GPU_TRIANGLES, 0, mesh->vertex_count);
         //printf("mesh vc: %zu\n", mesh->vertex_count);
     }
