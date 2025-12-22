@@ -107,8 +107,6 @@ int main()
     float angleX = 0.f;
     float angleY = 0.f;
 
-	int dbgIdx = 0;
-
 	// Main loop
 	while (aptMainLoop())
 	{
