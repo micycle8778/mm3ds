@@ -11,6 +11,7 @@ use citro3d::math::AspectRatio;
 use citro3d::math::ClipPlanes;
 use citro3d::math::FVec4;
 use citro3d::math::Projection;
+use citro3d::render::DepthFormat;
 use citro3d::render::Target;
 use citro3d::shader;
 use citro3d::sys;
@@ -109,7 +110,7 @@ impl<'gfx> Renderer<'gfx> {
         let context = Instance::new().unwrap();
         let mut top_screen = gfx.top_screen.borrow_mut();
         let RawFrameBuffer { width, height, .. } = top_screen.raw_framebuffer();
-        let target = context.render_target(width, height, top_screen, None).unwrap();
+        let target = context.render_target(width, height, top_screen, Some(DepthFormat::Depth24Stencil8)).unwrap();
 
         let v_lib = shader::Library::from_bytes(include_shader!("shader.pica")).unwrap();
         let v_entry = v_lib.get(0).unwrap();
@@ -305,15 +306,18 @@ fn main() {
             break;
         }
 
-        let mut model = Matrix4::identity();
-        model.rotate_x(angle_x);
-        model.rotate_y(angle_y);
-        model.translate(0., 0., -2.0 + angle_x.sin() * 0.5);
+        for (x, z) in [(-1.5, -3.), (0., -2.), (1.5, -3.)] {
+            let mut model = Matrix4::identity();
+            model.rotate_x(angle_x);
+            model.rotate_y(angle_y);
+            model.translate(x, 0., z + angle_x.sin() * 0.5);
+
+            renderer.please_render(mesh_id, model);
+        }
 
         angle_x += PI / 180.;
         angle_y += PI / 360.;
 
-        renderer.please_render(mesh_id, model);
         renderer.render();
     }
 }
