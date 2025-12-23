@@ -197,6 +197,8 @@ impl<'gfx> Renderer<'gfx> {
         self.context.render_frame_with(|mut pass| {
             pass.bind_program(&self.shader_program);
 
+            unsafe { sys::C3D_AlphaTest(true, ctru_sys::GPU_GREATER, 0x10); }
+
             const CLEAR_COLOR: u32 = 0x68b0d8ff;
             self.target.clear(ClearFlags::ALL, CLEAR_COLOR, 0);
             pass.select_render_target(&self.target).unwrap();
@@ -293,7 +295,7 @@ fn main() {
     ];
 
     let mut renderer = Renderer::new(&gfx);
-    let mesh_id = renderer.register_mesh(&VERTICES, include_bytes!("../kitten.t3x"), Material::default());
+    let mesh_id = renderer.register_mesh(&VERTICES, include_bytes!(concat!(env!("OUT_DIR"), "/lemon.t3x")), Material::default());
 
     let mut angle_x = 0.0_f32;
     let mut angle_y = 0.0_f32;
