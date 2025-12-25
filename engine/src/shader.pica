@@ -64,12 +64,17 @@
 	max r0,   zeros,         r0
 	mul r0.y, r0,            r0
 
+
+    ; clamp r0 to [0,1]
+    min r0, ones, r0
+    max r0, zeros, r0
+
 	; Accumulate the vertex color in r1, initializing it to the emission color
 	mov r1, mat_emi
 
 	; r1 += specularColor * lightClr * shininessLevel
-	mul r2, lightClr, r0.yyyy
-	mad r1, r2, mat_spe, r1
+	; mul r2, lightClr, r0.yyyy
+	; mad r1, r2, mat_spe, r1
 
 	; r1 += diffuseColor * lightClr * diffuseLevel
 	mul r2, lightClr, r0.xxxx
